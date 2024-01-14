@@ -1,7 +1,14 @@
 import React, { useState } from "react";
-import { auth } from "../Firebase";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth, database } from "../Firebase";
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+  signInWithPopup,
+  GoogleAuthProvider,
+} from "firebase/auth";
+import { ref, set } from "firebase/database";
 import image from "../assets/Image.png";
+import userImg from "../assets/user.png";
 import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { BiLogoFacebookCircle } from "react-icons/bi";
@@ -12,6 +19,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
   const navigate = useNavigate();
+  const provider = new GoogleAuthProvider();
   const [name, setName] = useState("");
   const [email, setEmaii] = useState("");
   const [password, setPassword] = useState("");
@@ -43,11 +51,19 @@ const Register = () => {
 
           updateProfile(user, {
             displayName: name,
+            photoURL: "https://i.ibb.co/hKGrjvY/user.jpg",
           })
             .then(() => {
               console.log(user);
               // Profile updated!
               // ...
+
+              set(ref(database, "users/" + user.uid), {
+                id: user.uid,
+                fullname: user.displayName,
+                email: user.email,
+                photo: user.photoURL,
+              });
 
               toast.success("Registration Success", {
                 position: "top-center",
@@ -104,6 +120,59 @@ const Register = () => {
           // ..
         });
     }
+  };
+
+  const handleGoogleAuth = async () => {
+    await signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+
+        console.log(user);
+
+        toast.success("Registration Success", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+
+        console.log(errorCode);
+
+        toast.error(errorCode, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      });
   };
 
   return (
@@ -234,8 +303,12 @@ const Register = () => {
             <div className="w-full h-[1px] bg-secondary"></div>
           </div>
 
-          <div className="my-9 flex items-center justify-center gap-3">
-            <FcGoogle size={35} className=" cursor-pointer" />
+          <div className="my-9 flex items-center justify-center gap-3 hidden">
+            <FcGoogle
+              onClick={handleGoogleAuth}
+              size={35}
+              className=" cursor-pointer"
+            />
             <BiLogoFacebookCircle
               size={35}
               className=" text-blue-600 cursor-pointer"

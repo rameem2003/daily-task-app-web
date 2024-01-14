@@ -1,6 +1,7 @@
 // Databse Coming From rameem2019@gmail.com
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { getDatabase } from "firebase/database";
 const firebaseConfig = {
   apiKey: "AIzaSyDRVLMVEGcgiGmtmi7g1qdVo_ZyaxJm40I",
   authDomain: "daily-task-app-4b785.firebaseapp.com",
@@ -14,3 +15,4 @@ const firebaseConfig = {
 // Initialize Firebase
 export const config = initializeApp(firebaseConfig);
 export const auth = getAuth(config);
+export const database = getDatabase();
