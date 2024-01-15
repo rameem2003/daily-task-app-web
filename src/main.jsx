@@ -4,9 +4,12 @@ import App from "./App.jsx";
 import "./index.css";
 import { AuthContextProvider } from "./context/AuthContextProvider.jsx";
 import { TodoContextProvider } from "./context/TodoContextProvider.jsx";
+import { EditorContextProvider } from "./context/EditorContextProvider.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <AuthContextProvider>
-    <App />
+    <EditorContextProvider>
+      <App />
+    </EditorContextProvider>
   </AuthContextProvider>
 );

@@ -6,7 +6,7 @@ import Loading from "./Loading";
 import Todo from "./Todo";
 import NoTodo from "./NoTodo";
 
-const TodoList = () => {
+const TodoList = ({ editTodo }) => {
   const { currentUser } = useContext(Authcontext);
   const [todos, setTodos] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -32,14 +32,14 @@ const TodoList = () => {
           <NoTodo />
         ) : (
           todos.map((item, i) => {
-            return <Todo key={i} item={item} />;
+            return <Todo key={i} item={item} editTodo={editTodo} />;
           })
         )}
       </>
     );
   };
 
-  console.log(todos);
+  // console.log(todos);
   return (
     <div className=" p-3 mt-3 overflow-y-scroll h-[90%]">
       {loading ? <Loading /> : <ShowTodos />}

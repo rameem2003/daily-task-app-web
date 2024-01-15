@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Sidebar = () => {
   const { currentUser } = useContext(Authcontext);
-  console.log(currentUser.uid);
+  // console.log(currentUser.uid);
   const [todo, setTodo] = useState("");
 
   const handleTodo = async (e) => {
@@ -60,7 +60,7 @@ const Sidebar = () => {
           className="h-[60px] w-[60px] rounded-full object-cover"
           alt=""
         />
-        <div>
+        <div className="w-full">
           <h5 className=" font-roboto font-normal text-white text-xl">
             Welcome,{" "}
           </h5>
@@ -90,7 +90,7 @@ const Sidebar = () => {
           Enter Your Task
         </h2>
 
-        <div class="relative mt-3">
+        <div className="relative mt-3">
           <input
             value={todo}
             onChange={(e) => setTodo(e.target.value)}
