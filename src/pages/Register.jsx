@@ -8,12 +8,12 @@ import {
 } from "firebase/auth";
 import { ref, set } from "firebase/database";
 import image from "../assets/Image.png";
-import userImg from "../assets/user.png";
 import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { BiLogoFacebookCircle } from "react-icons/bi";
 import { IoLogoApple } from "react-icons/io";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { ThreeDots } from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -28,6 +28,7 @@ const Register = () => {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [toggle, setToggle] = useState(false);
+  const [authLoading, setAuthLoading] = useState(false);
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -44,6 +45,7 @@ const Register = () => {
       setPasswordError(true);
     }
     if (email && password && name) {
+      setAuthLoading(true);
       await createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           // Signed up
@@ -88,6 +90,7 @@ const Register = () => {
             });
         })
         .catch((error) => {
+          setAuthLoading(false);
           const errorCode = error.code;
           const errorMessage = error.message;
 
@@ -293,7 +296,22 @@ const Register = () => {
             onClick={handleRegister}
             className=" font-roboto font-medium text-[12px] text-white block mt-9 w-[150px] h-8 mx-auto bg-primary rounded-[10px]"
           >
-            Sign Up
+            {authLoading ? (
+              <div className=" flex items-center justify-center">
+                <ThreeDots
+                  visible={true}
+                  height="auto"
+                  width="50px"
+                  color="#ffffff"
+                  radius="9"
+                  ariaLabel="three-dots-loading"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                />
+              </div>
+            ) : (
+              "Connect"
+            )}
           </button>
 
           <div className=" mt-7 relative">

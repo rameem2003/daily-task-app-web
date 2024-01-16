@@ -48,10 +48,14 @@ const UpdateTodo = ({ getTodo }) => {
     <>
       <ToastContainer />
       <div className=" w-full h-screen flex items-center justify-center bg-white/30 backdrop-blur-[0.5px]">
-        <div className=" w-96 h-52 bg-white rounded-md shadow-lg p-3">
+        <div className=" w-96 h-auto bg-white rounded-md shadow-lg p-3">
           <h3 className=" font-roboto font-semibold text-3xl text-center">
-            Update Your Todo {getTodo.task}
+            Update Your Todo
           </h3>
+
+          <p className=" font-roboto font-medium my-3 text-sm text-red-500">
+            Previous task: {getTodo.task}
+          </p>
 
           <div className="relative mt-3">
             <input
@@ -59,8 +63,10 @@ const UpdateTodo = ({ getTodo }) => {
               onChange={(e) => setNewTodo(e.target.value)}
               type="text"
               id="floating_helper_update"
+              // placeholder={getTodo.task}
               aria-describedby="floating_helper_text"
               className="block rounded-md px-2.5 pb-2.5 pt-5 w-full font-roboto font-medium text-xl text-gray-900 bg-gray-50  border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-green-600 peer"
+              placeholder=""
             />
             <label
               htmlFor="floating_helper_update"

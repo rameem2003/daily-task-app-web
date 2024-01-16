@@ -1,12 +1,9 @@
 import React, { useContext } from "react";
+import { Authcontext } from "./context/AuthContextProvider";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { FaReact } from "react-icons/fa";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import { Authcontext } from "./context/AuthContextProvider";
 
 function App() {
   const { currentUser } = useContext(Authcontext);

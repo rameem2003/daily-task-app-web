@@ -4,6 +4,7 @@ import { auth } from "../Firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { ThreeDots } from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -15,6 +16,7 @@ const Login = () => {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [toggle, setToggle] = useState(false);
+  const [authLoading, setAuthLoading] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -30,6 +32,7 @@ const Login = () => {
     }
 
     if (email && password) {
+      setAuthLoading(true);
       await signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           // Signed in
@@ -52,6 +55,7 @@ const Login = () => {
           }, 3000);
         })
         .catch((error) => {
+          setAuthLoading(false);
           const errorCode = error.code;
           const errorMessage = error.message;
 
@@ -163,7 +167,22 @@ const Login = () => {
             onClick={handleLogin}
             className=" font-roboto font-medium text-[12px] text-white block mt-9 w-[150px] h-8 mx-auto bg-primary rounded-[10px]"
           >
-            Connect
+            {authLoading ? (
+              <div className=" flex items-center justify-center">
+                <ThreeDots
+                  visible={true}
+                  height="auto"
+                  width="50px"
+                  color="#ffffff"
+                  radius="9"
+                  ariaLabel="three-dots-loading"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                />
+              </div>
+            ) : (
+              "Connect"
+            )}
           </button>
 
           <p className="font-roboto font-normal text-center text-[12px] text-secondary mt-7">
