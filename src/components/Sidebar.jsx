@@ -7,9 +7,11 @@ import { v4 as uuidv4 } from "uuid";
 import { IoMdSettings } from "react-icons/io";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { SettingContext } from "../context/SettingContextProvider";
 
 const Sidebar = () => {
   const { currentUser } = useContext(Authcontext);
+  const { setSetting } = useContext(SettingContext);
   // console.log(currentUser.uid);
   const [todo, setTodo] = useState("");
 
@@ -118,7 +120,10 @@ const Sidebar = () => {
       {/* form end */}
 
       {/* setting button */}
-      <button className=" font-roboto font-semibold text-2xl flex items-center justify-center gap-2 text-center text-gray-300 w-full py-3 absolute left-0 bottom-0">
+      <button
+        onClick={() => setSetting(true)}
+        className=" font-roboto font-semibold text-2xl flex items-center justify-center gap-2 text-center text-gray-300 w-full py-3 absolute left-0 bottom-0"
+      >
         <IoMdSettings /> Settings Preference
       </button>
     </div>
