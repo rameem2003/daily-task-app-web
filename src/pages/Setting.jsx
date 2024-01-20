@@ -13,15 +13,16 @@ import { SettingContext } from "../context/SettingContextProvider";
 import { FaTimes } from "react-icons/fa";
 
 const Setting = () => {
-  const { setSetting } = useContext(SettingContext);
+  const { setting, setSetting } = useContext(SettingContext);
   const { currentUser } = useContext(Authcontext);
   const [updateName, setUpdateName] = useState("");
-  const [file, setFile] = useState({});
-
+  const [file, setFile] = useState(null);
+  const [upProgress, setProgress] = useState(null);
   const updateUserProfile = async (e) => {
     e.preventDefault();
-    if (!file && updateName) {
+    if (updateName && !file) {
       await updateProfile(currentUser, {
+        ...currentUser,
         displayName: updateName,
       })
         .then(() => {
@@ -34,6 +35,7 @@ const Setting = () => {
         })
         .then(() => {
           setSetting(false);
+          console.log("Only Name");
         })
         .catch((error) => {
           // An error occurred
@@ -41,7 +43,7 @@ const Setting = () => {
           console.log(error.code);
         });
     }
-    if (file && !updateName) {
+    if (!updateName && file) {
       const storage = getStorage();
       const storageRef = myStorageref(
         storage,
@@ -58,6 +60,7 @@ const Setting = () => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log("Upload is " + progress + "% done");
+          setProgress(progress);
           switch (snapshot.state) {
             case "paused":
               console.log("Upload is paused");
@@ -97,7 +100,8 @@ const Setting = () => {
           });
         }
       );
-    } else {
+    }
+    if (updateName && file) {
       const storage = getStorage();
       const storageRef = myStorageref(
         storage,
@@ -159,7 +163,11 @@ const Setting = () => {
   };
   return (
     <div className=" fixed top-0 left-0 bg-white/30 backdrop-blur-[0.5] w-full h-screen flex items-center justify-center">
-      <div className=" w-[600px] h-[90%] bg-white rounded-md shadow-lg p-4">
+      <div
+        className={`w-[600px] duration-150 h-[90%] bg-white rounded-md shadow-lg p-4 ${
+          setting ? "scale-100" : "scale-0"
+        }`}
+      >
         <div className=" flex items-center justify-between">
           <h1 className=" font-roboto font-medium text-2xl">
             Settings Preference
@@ -222,6 +230,16 @@ const Setting = () => {
           >
             Update
           </button>
+
+          {upProgress > 0 ? (
+            <div
+              className={`h-5 w-[${upProgress}%] flex items-center justify-center bg-primary mt-4 rounded-md`}
+            >
+              <p>{upProgress} %</p>
+            </div>
+          ) : (
+            ""
+          )}
         </form>
       </div>
     </div>

@@ -71,7 +71,10 @@ const Sidebar = () => {
           </h1>
         </div>
 
-        <button className=" font-roboto font-semibold text-2xl text-center text-gray-300 duration-150 hover:rotate-12">
+        <button
+          onClick={() => setSetting(true)}
+          className=" font-roboto font-semibold text-2xl text-center text-gray-300 duration-150 hover:rotate-12"
+        >
           <IoMdSettings size={30} />
         </button>
       </div>
