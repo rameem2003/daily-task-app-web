@@ -11,6 +11,7 @@ import {
 import { Authcontext } from "../context/AuthContextProvider";
 import { SettingContext } from "../context/SettingContextProvider";
 import { FaTimes } from "react-icons/fa";
+import { v4 as uuidv4 } from "uuid";
 
 const Setting = () => {
   const { setting, setSetting } = useContext(SettingContext);
@@ -18,6 +19,7 @@ const Setting = () => {
   const [updateName, setUpdateName] = useState("");
   const [file, setFile] = useState(null);
   const [upProgress, setProgress] = useState(null);
+  console.log(currentUser.uid);
   const updateUserProfile = async (e) => {
     e.preventDefault();
     if (updateName && !file) {
@@ -45,10 +47,7 @@ const Setting = () => {
     }
     if (!updateName && file) {
       const storage = getStorage();
-      const storageRef = myStorageref(
-        storage,
-        `images/${new Date().toLocaleDateString()}`
-      );
+      const storageRef = myStorageref(storage, `images/${uuidv4()}`);
 
       const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -79,6 +78,7 @@ const Setting = () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
             console.log("File available at", downloadURL);
             await updateProfile(currentUser, {
+              ...currentUser,
               photoURL: downloadURL,
             })
               .then(() => {
