@@ -41,7 +41,7 @@ const TodoList = ({ editTodo }) => {
 
   // console.log(todos);
   return (
-    <div className=" p-3 mt-3 overflow-y-scroll h-[90%]">
+    <div className=" p-3 mt-3 overflow-y-scroll h-[90%] my-scrollbar">
       {loading ? <Loading /> : <ShowTodos />}
     </div>
   );

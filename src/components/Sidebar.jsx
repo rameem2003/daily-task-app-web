@@ -3,17 +3,18 @@ import { auth, database } from "../Firebase";
 import { signOut } from "firebase/auth";
 import { ref, set } from "firebase/database";
 import { Authcontext } from "../context/AuthContextProvider";
+import { SettingContext } from "../context/SettingContextProvider";
 import { v4 as uuidv4 } from "uuid";
 import { IoMdSettings } from "react-icons/io";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { SettingContext } from "../context/SettingContextProvider";
+import About from "../pages/About";
 
 const Sidebar = () => {
   const { currentUser } = useContext(Authcontext);
   const { setSetting } = useContext(SettingContext);
-  // console.log(currentUser.uid);
   const [todo, setTodo] = useState("");
+  const [about, setAbout] = useState(false);
 
   const handleTodo = async (e) => {
     e.preventDefault();
@@ -125,10 +126,44 @@ const Sidebar = () => {
       {/* setting button */}
       <button
         onClick={() => setSetting(true)}
-        className=" font-roboto font-semibold text-2xl flex items-center justify-center gap-2 text-center text-gray-300 w-full py-3 absolute left-0 bottom-0"
+        className=" hidden font-roboto font-semibold text-2xl flex items-center justify-center gap-2 text-center text-gray-300 w-full py-3 absolute left-0 bottom-0"
       >
         <IoMdSettings /> Settings Preference
       </button>
+
+      {/* footer start */}
+      <div className="absolute left-0 bottom-5 w-full">
+        <p className=" font-roboto font-medium text-gray-300 text-center ">
+          &copy; {new Date().getFullYear()}{" "}
+          <a
+            target="_blank"
+            className=" hover:text-white"
+            href="https://rameem.netlify.app/"
+          >
+            MH Rameem
+          </a>{" "}
+          from{" "}
+          <a
+            target="_blank"
+            className=" hover:text-white"
+            href="https://republic-of-legends.netlify.app/"
+          >
+            Republic of Legends
+          </a>
+        </p>
+
+        <p
+          onClick={() => setAbout(true)}
+          className=" font-roboto font-medium text-white text-center cursor-pointer"
+        >
+          Privacy Policy
+        </p>
+      </div>
+      {/* footer end */}
+
+      {/* show about start */}
+      {about && <About setAbout={setAbout} />}
+      {/* show about end */}
     </div>
   );
 };
