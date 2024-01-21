@@ -195,13 +195,13 @@ const Setting = () => {
               value={updateName}
               onChange={(e) => setUpdateName(e.target.value)}
               type="text"
-              id="floating_helper"
+              id="floating_helper_update"
               aria-describedby="floating_helper_text"
               className="block rounded-md px-2.5 pb-2.5 pt-5 w-full font-roboto font-medium text-xl text-gray-900 bg-gray-50  border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-green-600 peer"
               placeholder=" "
             />
             <label
-              htmlFor="floating_helper"
+              htmlFor="floating_helper_update"
               className="absolute font-roboto font-medium text-sm text-gray-500  duration-300 transform -translate-y-4 scale-75 top-5 z-10 origin-[0] start-2.5 peer-focus:text-green-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
             >
               Update Your Name

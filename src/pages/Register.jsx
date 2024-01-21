@@ -53,7 +53,7 @@ const Register = () => {
 
           updateProfile(user, {
             displayName: name,
-            photoURL: "https://i.ibb.co/hKGrjvY/user.jpg",
+            photoURL: "https://i.ibb.co/L9CPYL3/user-avatar.png",
           })
             .then(() => {
               console.log(user);
