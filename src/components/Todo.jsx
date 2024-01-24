@@ -18,7 +18,7 @@ const Todo = ({ item, editTodo }) => {
   const deleteTodo = (item) => {
     remove(ref(database, `todos/${currentUser.uid}/${item.todoID}`)).then(
       () => {
-        toast.info("Delete Success", {
+        toast.error("Delete Success", {
           position: "bottom-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -69,11 +69,15 @@ const Todo = ({ item, editTodo }) => {
 
   return (
     <>
-      <div className=" flex items-center justify-between my-3 p-4 w-full bg-green-200 rounded-md duration-200 cursor-pointer hover:bg-green-400">
+      <div
+        className={`group flex items-center justify-between my-3 p-4 w-full bg-green-200 rounded-md duration-200 cursor-pointer hover:bg-green-300 overflow-hidden ${
+          item.complete && "bg-blue-400"
+        }`}
+      >
         <h3 className=" font-roboto font-semibold capitalize text-2xl">
           {item.task}
         </h3>
-        <div className=" flex items-center gap-4">
+        <div className=" flex items-center gap-4 duration-150 translate-x-[150%] group-hover:translate-x-0">
           <Switch
             className=" font-roboto font-semibold"
             shape="fill"
