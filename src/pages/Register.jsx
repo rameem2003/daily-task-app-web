@@ -133,10 +133,14 @@ const Register = () => {
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
-
         console.log(user);
+
+        set(ref(database, "users/" + user.uid), {
+          id: user.uid,
+          fullname: user.displayName,
+          email: user.email,
+          photo: user.photoURL,
+        });
 
         toast.success("Registration Success", {
           position: "top-center",
@@ -157,11 +161,9 @@ const Register = () => {
         // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
-        // The email of the user's account used.
         const email = error.customData.email;
-        // The AuthCredential type that was used.
+
         const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
 
         console.log(errorCode);
 
@@ -321,17 +323,17 @@ const Register = () => {
             <div className="w-full h-[1px] bg-secondary"></div>
           </div>
 
-          <div className="my-9 flex items-center justify-center gap-3 hidden">
+          <div className="my-9 flex items-center justify-center gap-3">
             <FcGoogle
               onClick={handleGoogleAuth}
               size={35}
               className=" cursor-pointer"
             />
-            <BiLogoFacebookCircle
+            {/* <BiLogoFacebookCircle
               size={35}
               className=" text-blue-600 cursor-pointer"
             />
-            <IoLogoApple size={35} className=" cursor-pointer" />
+            <IoLogoApple size={35} className=" cursor-pointer" /> */}
           </div>
 
           <p className="font-roboto font-normal text-center text-[12px] text-secondary mt-7">
