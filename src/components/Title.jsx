@@ -7,7 +7,7 @@ const Title = () => {
         <img className=" w-[50px] h-[50px]" src="/icon.png" alt="" />
         <h1 className=" font-roboto font-semibold text-white text-2xl">
           Daily Task{" "}
-          <span className=" text-gray-300 text-[15px] italic"> v1.1.5</span>
+          <span className=" text-gray-300 text-[15px] italic"> v1.2.0</span>
         </h1>
       </div>
     </div>

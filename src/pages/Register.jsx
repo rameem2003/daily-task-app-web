@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import image from "../assets/Image.png";
 import { auth, database } from "../Firebase";
 import {
   createUserWithEmailAndPassword,
@@ -7,7 +8,6 @@ import {
   GoogleAuthProvider,
 } from "firebase/auth";
 import { ref, set } from "firebase/database";
-import image from "../assets/Image.png";
 import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { BiLogoFacebookCircle } from "react-icons/bi";

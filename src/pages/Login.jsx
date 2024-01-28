@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import image from "../assets/Image.png";
 import { auth, database } from "../Firebase";
 import {
@@ -6,9 +6,10 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
 } from "firebase/auth";
-import { onValue, ref } from "firebase/database";
 import { Link, useNavigate } from "react-router-dom";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { BiLogoFacebookCircle } from "react-icons/bi";
+import { IoLogoApple } from "react-icons/io";
 import { FcGoogle } from "react-icons/fc";
 import { ThreeDots } from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
@@ -24,19 +25,6 @@ const Login = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [toggle, setToggle] = useState(false);
   const [authLoading, setAuthLoading] = useState(false);
-  const [checkUser, setCheckUser] = useState([]);
-
-  useEffect(() => {
-    const starCountRef = ref(database, "users/");
-    onValue(starCountRef, async (snapshot) => {
-      let arr = [];
-      snapshot.forEach((item) => {
-        arr.push(item.val());
-      });
-
-      setCheckUser(arr);
-    });
-  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -96,18 +84,15 @@ const Login = () => {
     }
   };
 
-  const handleGoogleAuth = async () => {
-    await signInWithPopup(auth, provider)
-      .then(async (result) => {
+  const handleGoogleAuth = (e) => {
+    e.preventDefault();
+    signInWithPopup(auth, provider)
+      .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
-
-        let notMatch = checkUser.filter((dUser) => dUser.id == user.uid);
-
-        console.log(notMatch);
 
         toast.success("Login Success", {
           position: "top-center",
@@ -122,51 +107,13 @@ const Login = () => {
         setTimeout(() => {
           navigate("/");
         }, 3000);
-
-        // if (notMatch.length != 0) {
-        //   toast.success("Login Success", {
-        //     position: "top-center",
-        //     autoClose: 5000,
-        //     hideProgressBar: false,
-        //     closeOnClick: true,
-        //     pauseOnHover: true,
-        //     draggable: true,
-        //     progress: undefined,
-        //     theme: "colored",
-        //   });
-
-        //   setTimeout(() => {
-        //     navigate("/");
-        //   }, 3000);
-        // } else {
-        //   await set(ref(database, "users/" + user.uid), {
-        //     id: user.uid,
-        //     fullname: user.displayName,
-        //     email: user.email,
-        //     photo: user.photoURL,
-        //   });
-
-        //   toast.success("New User Register Success", {
-        //     position: "top-center",
-        //     autoClose: 5000,
-        //     hideProgressBar: false,
-        //     closeOnClick: true,
-        //     pauseOnHover: true,
-        //     draggable: true,
-        //     progress: undefined,
-        //     theme: "colored",
-        //   });
-
-        //   setTimeout(() => {
-        //     navigate("/");
-        //   }, 3000);
-        // }
       })
       .catch((error) => {
         // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
         const email = error.customData.email;
+
         const credential = GoogleAuthProvider.credentialFromError(error);
         console.log(errorCode);
 
@@ -202,6 +149,17 @@ const Login = () => {
           <p className=" font-roboto font-normal text-center text-[12px] text-secondary mt-[18px]">
             Note your daily task
           </p>
+
+          <button
+            onClick={handleGoogleAuth}
+            className=" w-[70%] h-[50px] mx-auto my-3 flex items-center justify-center gap-3 border-[1.5px] border-gray-200 rounded-md"
+          >
+            <FcGoogle size={35} className=" cursor-pointer" />
+
+            <h3 className=" font-roboto font-medium text-[15px]">
+              Login with google
+            </h3>
+          </button>
 
           <div className="mt-7">
             <label
@@ -299,24 +257,24 @@ const Login = () => {
             </Link>
           </p>
 
-          <div className=" mt-7 relative">
+          <div className=" mt-7 relative hidden">
             <span className=" font-roboto font-normal text-[12px] absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] bg-white px-3">
               OR
             </span>
             <div className="w-full h-[1px] bg-secondary"></div>
           </div>
 
-          <div className="my-9 flex items-center justify-center gap-3">
+          <div className="my-9 hidden items-center justify-center gap-3">
             <FcGoogle
               onClick={handleGoogleAuth}
               size={35}
               className=" cursor-pointer"
             />
-            {/* <BiLogoFacebookCircle
+            <BiLogoFacebookCircle
               size={35}
               className=" text-blue-600 cursor-pointer"
             />
-            <IoLogoApple size={35} className=" cursor-pointer" /> */}
+            <IoLogoApple size={35} className=" cursor-pointer" />
           </div>
         </form>
       </div>
