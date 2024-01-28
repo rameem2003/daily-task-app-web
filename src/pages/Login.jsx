@@ -84,52 +84,6 @@ const Login = () => {
     }
   };
 
-  const handleGoogleAuth = (e) => {
-    e.preventDefault();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        // The signed-in user info.
-        const user = result.user;
-
-        toast.success("Login Success", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-        setTimeout(() => {
-          navigate("/");
-        }, 3000);
-      })
-      .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        const email = error.customData.email;
-
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        console.log(errorCode);
-
-        toast.error(errorCode, {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-      });
-  };
-
   return (
     <div className=" w-full h-screen flex items-center">
       <ToastContainer />
@@ -139,6 +93,7 @@ const Login = () => {
 
       <div className=" w-7/12 flex items-center justify-center">
         <form
+          onSubmit={handleLogin}
           action=""
           className=" w-[393px] shadow-xl px-[51px] py-7  rounded-[8px]"
         >
@@ -150,10 +105,7 @@ const Login = () => {
             Note your daily task
           </p>
 
-          <button
-            onClick={handleGoogleAuth}
-            className=" w-[70%] h-[50px] mx-auto my-3 flex items-center justify-center gap-3 border-[1.5px] border-gray-200 rounded-md"
-          >
+          <button className=" w-[70%] h-[50px] mx-auto my-3 hidden items-center justify-center gap-3 border-[1.5px] border-gray-200 rounded-md">
             <FcGoogle size={35} className=" cursor-pointer" />
 
             <h3 className=" font-roboto font-medium text-[15px]">
@@ -265,11 +217,7 @@ const Login = () => {
           </div>
 
           <div className="my-9 hidden items-center justify-center gap-3">
-            <FcGoogle
-              onClick={handleGoogleAuth}
-              size={35}
-              className=" cursor-pointer"
-            />
+            <FcGoogle size={35} className=" cursor-pointer" />
             <BiLogoFacebookCircle
               size={35}
               className=" text-blue-600 cursor-pointer"

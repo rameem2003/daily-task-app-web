@@ -27,6 +27,8 @@ const UpdateTodo = ({ getTodo }) => {
     } else {
       update(ref(database, `todos/${currentUser.uid}/${getTodo.todoID}`), {
         task: newTodo,
+        time: new Date().toLocaleTimeString(),
+        date: new Date().toDateString(),
       }).then(() => {
         setEditor(false);
 

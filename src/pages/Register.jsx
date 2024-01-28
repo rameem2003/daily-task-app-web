@@ -316,14 +316,14 @@ const Register = () => {
             )}
           </button>
 
-          <div className=" mt-7 relative">
+          <div className=" mt-7 relative hidden">
             <span className=" font-roboto font-normal text-[12px] absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] bg-white px-3">
               OR
             </span>
             <div className="w-full h-[1px] bg-secondary"></div>
           </div>
 
-          <div className="my-9 flex items-center justify-center gap-3">
+          <div className="my-9 hidden items-center justify-center gap-3">
             <FcGoogle
               onClick={handleGoogleAuth}
               size={35}

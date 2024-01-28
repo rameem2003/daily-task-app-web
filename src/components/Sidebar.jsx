@@ -36,6 +36,8 @@ const Sidebar = () => {
         todoID: todoID,
         task: todo,
         complete: false,
+        time: new Date().toLocaleTimeString(),
+        date: new Date().toDateString(),
       }).then(() => {
         toast.success("Task Added", {
           position: "bottom-right",
