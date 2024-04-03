@@ -1,20 +1,49 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { auth, database } from "../Firebase";
 import { signOut } from "firebase/auth";
-import { ref, set } from "firebase/database";
+import { onValue, ref, set } from "firebase/database";
 import { Authcontext } from "../context/AuthContextProvider";
 import { SettingContext } from "../context/SettingContextProvider";
 import { v4 as uuidv4 } from "uuid";
 import { IoMdSettings } from "react-icons/io";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import About from "../pages/About";
+import { Chart } from "react-google-charts";
+import "react-toastify/dist/ReactToastify.css";
 
 const Sidebar = () => {
   const { currentUser } = useContext(Authcontext);
   const { setSetting } = useContext(SettingContext);
   const [todo, setTodo] = useState("");
+  const [todos, setTodos] = useState([]);
   const [about, setAbout] = useState(false);
+
+  useEffect(() => {
+    const starCountRef = ref(database, "todos/" + currentUser.uid);
+    onValue(starCountRef, (snapshot) => {
+      let arr = [];
+      snapshot.forEach((item) => {
+        arr.push(item.val());
+      });
+
+      setTodos(arr);
+    });
+  }, []);
+
+  const completeTask = todos.filter((item) => item.complete == true);
+  const notCompleteTask = todos.filter((item) => item.complete == false);
+
+  const data = [
+    ["Task", "Hours per Day"],
+    ["Complete", completeTask.length],
+    ["Incomplete", notCompleteTask.length],
+  ];
+
+  const options = {
+    title: "Statistics",
+    pieHole: 0.4,
+    is3D: true,
+  };
 
   const handleTodo = async (e) => {
     e.preventDefault();
@@ -124,6 +153,16 @@ const Sidebar = () => {
         </button>
       </form>
       {/* form end */}
+
+      <div className=" bg-primary mt-5">
+        <Chart
+          chartType="PieChart"
+          width="100%"
+          height="400px"
+          data={data}
+          options={options}
+        />
+      </div>
 
       {/* setting button */}
       <button
