@@ -12,7 +12,7 @@ import {
 
 const About = ({ setAbout }) => {
   return (
-    <div className=" fixed top-0 left-0 bg-white/30 backdrop-blur-[0.5] w-full h-screen flex items-center justify-center">
+    <div className=" fixed top-0 left-0 bg-white/30 backdrop-blur-[0.5] z-50 w-full h-screen flex items-center justify-center">
       <div className="w-[600px] duration-150 h-[90%] bg-white rounded-md shadow-lg p-4 overflow-y-scroll my-scrollbar">
         <div className=" relative">
           <h1 className=" font-roboto font-bold text-black text-center text-2xl mb-3">
