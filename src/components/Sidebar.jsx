@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import About from "../pages/About";
 import { auth, database } from "../Firebase";
 import { signOut } from "firebase/auth";
 import { onValue, ref, set } from "firebase/database";
@@ -7,7 +8,6 @@ import { SettingContext } from "../context/SettingContextProvider";
 import { v4 as uuidv4 } from "uuid";
 import { IoMdSettings } from "react-icons/io";
 import { ToastContainer, toast } from "react-toastify";
-import About from "../pages/About";
 import { Chart } from "react-google-charts";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -85,7 +85,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="w-3/12 p-6 bg-primary h-screen relative">
+    <div className=" hidden xl:block xl:w-3/12 p-6 bg-primary h-screen overflow-y-scroll no-scrollbar relative">
       <ToastContainer />
       {/* profile start */}
       <div className=" flex items-center justify-between gap-3">
@@ -173,7 +173,7 @@ const Sidebar = () => {
       </button>
 
       {/* footer start */}
-      <div className="absolute left-0 bottom-5 w-full">
+      <div className=" my-5 w-full">
         <p className=" font-roboto font-medium text-gray-300 text-center ">
           &copy; {new Date().getFullYear()}{" "}
           <a

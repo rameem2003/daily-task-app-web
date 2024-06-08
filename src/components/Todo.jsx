@@ -70,7 +70,7 @@ const Todo = ({ item, editTodo }) => {
   return (
     <>
       <div
-        className={`group flex items-center justify-between my-3 p-4 w-full bg-green-200 rounded-md duration-200 cursor-pointer hover:bg-green-300 overflow-hidden ${
+        className={`group flex gap-6 flex-col items-start  xl:flex-row xl:items-center justify-between my-3 p-4 w-full bg-green-200 rounded-md duration-200 cursor-pointer hover:bg-green-300 overflow-hidden ${
           item.complete && "bg-red-400"
         }`}
       >
@@ -84,12 +84,11 @@ const Todo = ({ item, editTodo }) => {
           </p>
         </div>
 
-        <p className=" font-roboto font-normal italic">
-          {" "}
+        <p className=" hidden xl:block  font-roboto font-normal italic">
           <span>Task ID:</span> {item.todoID}
         </p>
 
-        <div className=" flex items-center gap-4 duration-150 translate-x-[150%] group-hover:translate-x-0">
+        <div className=" flex items-center gap-4 duration-150 xl:translate-x-[150%] xl:group-hover:translate-x-0">
           <Switch
             className=" font-roboto font-semibold"
             shape="fill"

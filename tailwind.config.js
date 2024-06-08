@@ -11,6 +11,10 @@ export default {
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],
       },
+
+      backgroundImage: {
+        bgImage: "url(./assets/Image.png)",
+      },
     },
   },
   plugins: [],

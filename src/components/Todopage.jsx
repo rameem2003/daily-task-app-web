@@ -3,6 +3,7 @@ import Title from "./Title";
 import TodoList from "./TodoList";
 import UpdateTodo from "./UpdateTodo";
 import { EditorContext } from "../context/EditorContextProvider";
+import InputComponentForMobile from "./InputComponentForMobile";
 
 const Todopage = () => {
   const { editor } = useContext(EditorContext);
@@ -13,7 +14,7 @@ const Todopage = () => {
   };
 
   return (
-    <div className="w-9/12 h-screen bg-gray-50">
+    <div className=" w-full xl:w-9/12 h-screen bg-gray-50 relative">
       <Title />
 
       {editor ? (
@@ -21,6 +22,8 @@ const Todopage = () => {
       ) : (
         <TodoList editTodo={editTodo} />
       )}
+
+      <InputComponentForMobile />
     </div>
   );
 };

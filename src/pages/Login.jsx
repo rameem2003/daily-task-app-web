@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import image from "../assets/Image.png";
+import { version } from "../constant/Version";
 import { auth, database } from "../Firebase";
 import {
   signInWithEmailAndPassword,
@@ -87,15 +88,23 @@ const Login = () => {
   return (
     <div className=" w-full h-screen flex items-center">
       <ToastContainer />
-      <div className=" w-5/12 h-screen">
+
+      <div className=" fixed right-3 bottom-3">
+        <p className=" text-white xl:text-black font-roboto font-semibold text-xs sm:text-base">
+          App version: <span className="italic">{version}</span> | by Mamood
+          Hassan Rameem
+        </p>
+      </div>
+
+      <div className=" hidden xl:block xl:w-5/12 h-screen">
         <img className="w-full h-screen object-cover" src={image} alt="" />
       </div>
 
-      <div className=" w-7/12 flex items-center justify-center">
+      <div className=" w-full xl:w-7/12 bg-bgImage xl:bg-none bg-no-repeat bg-cover h-screen xl:h-auto flex items-center justify-center">
         <form
           onSubmit={handleLogin}
           action=""
-          className=" w-[393px] shadow-xl px-[51px] py-7  rounded-[8px]"
+          className=" w-[393px] bg-white shadow-xl px-10 xl:px-[51px] py-7  rounded-[8px]"
         >
           <h1 className=" font-roboto font-medium text-center text-[20px] text-primary">
             Welcome To Daily Task
