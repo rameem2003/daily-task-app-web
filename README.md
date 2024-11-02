@@ -30,8 +30,7 @@ Daily Task Web App UI
 
 App Home Screen
 
-![Logo](https://i.ibb.co/jJ1s1jh/screencapture-savedailytask-netlify-app-2024-03-03-08-50-19.png)
-
+![Logo](https://i.ibb.co.com/LN2H2sS/screencapture-savedailytask-netlify-app-2024-03-03-08-50-19.png)
 App Login Screen
 
 ![Logo](https://i.ibb.co/dgT4HrG/screencapture-savedailytask-netlify-app-login-2024-03-03-08-51-07.png)
